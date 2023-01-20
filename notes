@@ -1,0 +1,108 @@
+Secrets est un module pour générer aléatoirement des nombres et des tokens.
+Cette génération est dite forte au sens cryptographique puisqu'il fournit un accès à la source d'aléa la plus sûre dispo sur notre OS.
+On peut générer tout types de nombre en fonction d'un intervalle ou d'un nb de bits.
+Les fonctions les plus intéréssantes semblent être celles de génération de token.
+Grâce à ces fonctions, il est possible de générer aléatoirement des chaines de caractères selon différentes bases.
+Pratique pour générer des lien de réinitialisation de mot de passe par exemple.
+Grâce à la fonction secret choice, on peut choisir aléatoirement un caractère dans une chaine.
+
+
+
+|-------------------------------------------------|
+|                     4 cartes                    |
+|                      Michel                     |
+|                                                 |
+|                                                 |
+|                                                 |
+|                        +2G                      |
+|                                                 |
+|               Appuyez sur E pour jouer          |
+|                votre +2G à la volée.            |
+|                                                 |
+|                1R 3B +2G 5Y 5R 9B               |
+|-------------------------------------------------|
+
+|-------------------------------------------------|
+|                     7 cartes                    |
+|                      Michel                     |
+|                                                 |
+|                                                 |
+|                                                 |
+|                        8G                       |
+|                                                 |
+|             Saisissez la carte que vous         |
+|                souhaitez jouer :                |
+|                                                 |
+|                  1R 3B 5Y 5R 9B                 |
+|-------------------------------------------------|
+
+|-------------------------------------------------|
+|                     3 cartes                    |
+|                      Michel                     |
+|                                                 |
+|                                                 |
+|                                                 |
+|                        2Y                       |
+|                                                 |
+|                Appuyez sur E pour               |
+|                déclarer votre uno.              |
+|                                                 |
+|                       5Y                        |
+|-------------------------------------------------|
+
+|-------------------------------------------------|
+|                       UNO                       |
+|                                                 |
+|                                                 |
+|                                                 |
+|                                                 |
+|       Appuyer sur n'importe quelle touche       |
+|             pour lancer une partie              |
+|                                                 |
+|                                                 |
+|                                                 |
+|                                                 |
+|-------------------------------------------------|
+
+|-------------------------------------------------|
+|                      UNO                        |
+|                                                 |
+|                                                 |
+|                                                 |
+|                                                 |
+|       Bravo! Vous avez perdu, vous avez un      |
+|               niveau execrable...               |
+|                                                 |
+|                                                 |
+|                                                 |
+|                                                 |
+|-------------------------------------------------|
+
+
+|-------------------------------------------------|
+|                      UNO                        |
+|                                                 |
+|                                                 |
+|                                                 |
+|                                                 |
+|       Bravo! Vous avez gagné, vous avez un      |
+|                  niveau de roi !                |
+|                                                 |
+|                                                 |
+|                                                 |
+|                                                 |
+|-------------------------------------------------|
+
+
+3 tableaux
+
+
+pioche {
+
+}
+
+main[]
+
+mainIA[]
+
+fosse[]
