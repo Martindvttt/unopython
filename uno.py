@@ -1,4 +1,3 @@
-import secrets
 import random
 
 pioche = [
@@ -33,10 +32,11 @@ def partie():
         tour(mainJoueur)
         tourIA(mainIA)
 
+
 def start():
     random.shuffle(pioche)
     for i in range(0, 7):
-        mainJoueur[i] = pioche.pop()
-        mainIA[i] = pioche.pop()
-    fosse[0] = pioche.pop()
+        mainJoueur.append(pioche.pop())
+        mainIA.append(pioche.pop())
+    fosse.append(pioche.pop())
     partie()
