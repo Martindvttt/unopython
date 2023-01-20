@@ -94,15 +94,21 @@ Grâce à la fonction secret choice, on peut choisir aléatoirement un caractèr
 |-------------------------------------------------|
 
 
-3 tableaux
 
+pioche[] = 
+fosse[] = 
 
-pioche {
+main[] = 
+mainIA[] = 
+
+pioche(main) {
 
 }
 
-main[]
+jouer(carte, main) {
 
-mainIA[]
+}
 
-fosse[]
+est_jouable(carte) {
+    
+}
