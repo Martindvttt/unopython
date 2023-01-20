@@ -1,4 +1,5 @@
 import secrets
+import random
 
 pioche = [
     "9G", "9G", "8G", "8G", "7G", "7G", "6G", "6G", "5G", "5G", "4G", "4G",
@@ -11,9 +12,31 @@ pioche = [
 ]
 fosse = []
 
-main = []
+mainJoueur = []
 mainIA = []
 
+def jouable():
+def tourIA():
 
-def pioche(main):
-    i = secrets.randbelow(76)
+def piocher(main):
+    main.append(pioche.pop())
+
+def tour(main):
+    if jouable(main):
+        carte = str(input('Carte a jouer :'))
+        fosse.append(main.pop(main.index(carte)))
+    else:
+        piocher(main)
+
+def partie():
+    while mainIA or mainJoueur != 0:
+        tour(mainJoueur)
+        tourIA(mainIA)
+
+def start():
+    random.shuffle(pioche)
+    for i in range(0, 7):
+        mainJoueur[i] = pioche.pop()
+        mainIA[i] = pioche.pop()
+    fosse[0] = pioche.pop()
+    partie()

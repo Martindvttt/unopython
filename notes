@@ -98,10 +98,8 @@ Grâce à la fonction secret choice, on peut choisir aléatoirement un caractèr
 pioche[] = 
 fosse[] = 
 
-main[] = 
-mainIA[] = 
 
-pioche(main) {
+pioche {
 
 }
 
