@@ -14,6 +14,12 @@ mainJoueur = []
 mainIA = []
 
 
+def piocher(main):
+    main.append(pioche.pop())
+    if jouable(main):
+        fosse.append(main.pop())
+
+
 def jouable(main):
     cartejouable = []
     for carte in main:
@@ -24,32 +30,35 @@ def jouable(main):
         lettref = cartedefosse[1]
         if chiffreia == chiffref or lettreia == lettref:
             cartejouable.append(carte)
-        return (cartejouable)
+    return cartejouable
 
 
 def tourIA(main):
     cartes = jouable(main)
-    if cartes != 0:
+    if cartes:
         random.shuffle(cartes)
-        cartes.pop()
+        fosse.append(main.pop(main.index(cartes[-1])))
+        print(f"L'IA pose un {fosse[-1]}")
     else:
         piocher(main)
-
-
-def piocher(main):
-    main.append(pioche.pop())
+        print("L'IA pioche")
 
 
 def tour(main):
     if jouable(main):
+        print(f"Michel : {len(mainIA)} cartes restantes")
+        print(f"Fosse : {fosse[-1]}")
+        print(f"main : {main}")
+
         carte = str(input('Carte a jouer :'))
         fosse.append(main.pop(main.index(carte)))
     else:
         piocher(main)
+        print("Vous piochez")
 
 
 def partie():
-    while mainIA or mainJoueur != 0:
+    while mainIA or mainJoueur:
         tour(mainJoueur)
         tourIA(mainIA)
 
@@ -61,3 +70,6 @@ def start():
         mainIA.append(pioche.pop())
     fosse.append(pioche.pop())
     partie()
+
+
+start()
