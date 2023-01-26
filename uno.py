@@ -84,7 +84,7 @@ start()
 
 
 
-# ----Dislay----
+# ----Display----
 
 
 
