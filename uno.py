@@ -12,12 +12,52 @@ pioche = [
 fosse = []
 mainJoueur = []
 mainIA = []
+lap = int(0)
+
+# ----Display---- #
+
+
+def display(index):
+    input_str = {
+        1: "La carte piochée à été posée",
+        2: f"Carte posée : {fosse[-1]}",
+        3: "Vous piochez",
+        4: "L'IA pioche",
+        5: "Joueur gagne",
+        6: "IA gagne",
+    }
+    output = 0
+    print("|********************** UNO **********************|")
+    print()
+    print('Michel'.center(50))
+    print(f"{len(mainIA)} cartes restantes".center(50))
+    print()
+    print()
+    print()
+    print(f"Fosse : {fosse[-1]}".center(50))
+    print()
+    print()
+    print()
+    print(f"{mainJoueur}".center(50))
+    if index < 7:
+        print(input_str[index].center(50))
+    elif index == 7:
+        output = str(input('Carte a jouer :'))
+    print()
+    print()
+    print("|********************** *** **********************|")
+    return output
 
 
 def piocher(main):
     main.append(pioche.pop())
     if jouable(main):
         fosse.append(main.pop())
+        display(1)
+    elif main == mainIA:
+        display(4)
+    elif main == mainJoueur:
+        display(3)
 
 
 def jouable(main):
@@ -38,36 +78,33 @@ def tourIA(main):
     if cartes:
         random.shuffle(cartes)
         fosse.append(main.pop(main.index(cartes[-1])))
-        print(f"L'IA pose un {fosse[-1]}")
+        display(3)
     else:
         piocher(main)
-        print("L'IA pioche")
 
 
 def tour(main):
     if jouable(main):
-        print(f"Michel : {len(mainIA)} cartes restantes")
-        print(f"Fosse : {fosse[-1]}")
-        print(f"main : {main}")
-
-        carte = str(input('Carte a jouer :'))
+        carte = display(7)
         fosse.append(main.pop(main.index(carte)))
+        display(2)
     else:
         piocher(main)
-        print("Vous piochez")
 
 
 def partie():
     while mainJoueur or mainIA:
-        if len(mainJoueur) >= 1:
+        if len(mainJoueur) >= 1 and lap == 0:
             tour(mainJoueur)
+            lap = 1
         elif len(mainJoueur) <= 1:
-            print("Joueur Gagne")
+            display(5)
             break
-        elif len(mainIA) >= 1:
+        elif len(mainIA) >= 1 and lap == 1:
             tourIA(mainIA)
+            lap = 0
         elif len(mainIA) <= 1:
-            print("IA Gagne")
+            display(6)
             break
 
 
