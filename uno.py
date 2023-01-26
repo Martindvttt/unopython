@@ -12,7 +12,6 @@ pioche = [
 fosse = []
 mainJoueur = []
 mainIA = []
-lap = 0
 
 # ----Display---- #
 
@@ -78,7 +77,7 @@ def tourIA(main):
     if cartes:
         random.shuffle(cartes)
         fosse.append(main.pop(main.index(cartes[-1])))
-        display(3)
+        display(2)
     else:
         piocher(main)
 
@@ -93,17 +92,18 @@ def tour(main):
 
 
 def partie():
+    lap = 0
     while mainJoueur or mainIA:
         if len(mainJoueur) >= 1 and lap == 0:
             tour(mainJoueur)
             lap = 1
-        elif len(mainJoueur) <= 1:
+        elif len(mainJoueur) < 1:
             display(5)
             break
         elif len(mainIA) >= 1 and lap == 1:
             tourIA(mainIA)
             lap = 0
-        elif len(mainIA) <= 1:
+        elif len(mainIA) < 1:
             display(6)
             break
 
