@@ -12,7 +12,7 @@ pioche = [
 fosse = []
 mainJoueur = []
 mainIA = []
-lap = int(0)
+lap = 0
 
 # ----Display---- #
 
@@ -118,31 +118,3 @@ def start():
 
 
 start()
-
-
-
-# ----Display----
-
-
-
-
-y = 'Michel'.center(50)
-texte = 'Saisissez la carte que vous souhaitez jouer : '.center(50) 
-c = fosse [-1]
-
-print("|********************** UNO **********************|")
-print()
-print(print(f"{mainIA:^50}"))
-print(y)
-print()
-print()
-print()
-print(f"{c:^50}")
-print()
-print()
-print()
-print(texte)
-print()
-print(print(f"{mainJoueur:^50}"))
-print()
-print("|********************** *** **********************|") 
