@@ -1,120 +1,75 @@
 import random
 
-pioche = [
-    "9G", "9G", "8G", "8G", "7G", "7G", "6G", "6G", "5G", "5G", "4G", "4G",
-    "3G", "3G", "2G", "2G", "1G", "1G", "0G", "9Y", "9Y", "8Y", "8Y", "7Y",
-    "7Y", "6Y", "6Y", "5Y", "5Y", "4Y", "4Y", "3Y", "3Y", "2Y", "2Y", "1Y",
-    "1Y", "0Y", "9R", "9R", "8R", "8R", "7R", "7R", "6R", "6R", "5R", "5R",
-    "4R", "4R", "3R", "3R", "2R", "2R", "1R", "1R", "0R", "9B", "9B", "8B",
-    "8B", "7B", "7B", "6B", "6B", "5B", "5B", "4B", "4B", "3B", "3B", "2B",
-    "2B", "1B", "1B", "0B"
-]
-fosse = []
-mainJoueur = []
-mainIA = []
-lap = 0
+deck = []
+waste = []
+player_hand = []
+IA_hand = []
 
-# ----Display---- #
+# this function rule the distribution of cards to the players
+def pick(hand):
+    hand.append(deck.pop())
+    if playable(hand):
+        waste.append(hand.pop())
 
 
-def display(index):
-    input_str = {
-        1: "La carte piochée à été posée",
-        2: f"Carte posée : {fosse[-1]}",
-        3: "Vous piochez",
-        4: "L'IA pioche",
-        5: "Joueur gagne",
-        6: "IA gagne",
-    }
-    output = 0
-    print("|********************** UNO **********************|")
-    print()
-    print('Michel'.center(50))
-    print(f"{len(mainIA)} cartes restantes".center(50))
-    print()
-    print()
-    print()
-    print(f"Fosse : {fosse[-1]}".center(50))
-    print()
-    print()
-    print()
-    print(f"{mainJoueur}".center(50))
-    if index < 7:
-        print(input_str[index].center(50))
-    elif index == 7:
-        output = str(input('Carte a jouer :'))
-    print()
-    print()
-    print("|********************** *** **********************|")
-    return output
+def playable(hand):
+    playable_card = []
+    for card in hand:
+        IA_numb = card[0]
+        IA_letter = card[1]
+        waste_card = waste[-1]
+        player_numb = waste_card[0]
+        player_letter = waste_card[1]
+        if IA_numb == player_numb or IA_letter == player_letter:
+            playable_card.append(card)
+    return playable_card
 
 
-def piocher(main):
-    main.append(pioche.pop())
-    if jouable(main):
-        fosse.append(main.pop())
-        display(1)
-    elif main == mainIA:
-        display(4)
-    elif main == mainJoueur:
-        display(3)
-
-
-def jouable(main):
-    cartejouable = []
-    for carte in main:
-        chiffreia = carte[0]
-        lettreia = carte[1]
-        cartedefosse = fosse[-1]
-        chiffref = cartedefosse[0]
-        lettref = cartedefosse[1]
-        if chiffreia == chiffref or lettreia == lettref:
-            cartejouable.append(carte)
-    return cartejouable
-
-
-def tourIA(main):
-    cartes = jouable(main)
-    if cartes:
-        random.shuffle(cartes)
-        fosse.append(main.pop(main.index(cartes[-1])))
-        display(3)
+def IA_turn(hand):
+    cards = playable(hand)
+    if cards:
+        random.shuffle(cards)
+        waste.append(hand.pop(hand.index(cards[-1])))
+        print(f"L'IA pose un {waste[-1]}")
     else:
-        piocher(main)
+        pick(hand)
+        print("L'IA pioche")
 
 
-def tour(main):
-    if jouable(main):
-        carte = display(7)
-        fosse.append(main.pop(main.index(carte)))
-        display(2)
+def player_turn(hand):
+    if playable(hand):
+        print(f"Michel : {len(IA_hand)} cartes restantes")
+        print(f"défausse : {waste[-1]}")
+        print(f"main : {hand}")
+
+        carte = str(input("Carte a jouer :"))
+        waste.append(hand.pop(hand.index(carte)))
     else:
-        piocher(main)
+        pick(hand)
+        print("Vous piochez")
 
 
-def partie():
-    while mainJoueur or mainIA:
-        if len(mainJoueur) >= 1 and lap == 0:
-            tour(mainJoueur)
-            lap = 1
-        elif len(mainJoueur) <= 1:
-            display(5)
+def game():
+    while player_hand or IA_hand:
+        if len(player_hand) >= 1:
+            player_turn(player_hand)
+        elif len(player_hand) <= 1:
+            print("Joueur Gagne")
             break
-        elif len(mainIA) >= 1 and lap == 1:
-            tourIA(mainIA)
-            lap = 0
-        elif len(mainIA) <= 1:
-            display(6)
+        elif len(IA_hand) >= 1:
+            IA_turn(IA_hand)
+        elif len(IA_hand) <= 1:
+            print("IA Gagne")
             break
 
-
+# this function rule the distribution of cards to the players
 def start():
-    random.shuffle(pioche)
+    random.shuffle(deck)
     for i in range(0, 2):
-        mainJoueur.append(pioche.pop())
-        mainIA.append(pioche.pop())
-    fosse.append(pioche.pop())
-    partie()
+        player_hand.append(deck.pop())
+        IA_hand.append(deck.pop())
+    waste.append(deck.pop())
+    game()
 
 
 start()
