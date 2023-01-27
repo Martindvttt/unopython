@@ -110,3 +110,16 @@ jouer(carte, main) {
 est_jouable(carte) {
     
 }
+
+
++2
+
+
++4
+
+Fonction fosse :
+
+params : main carte index
+
+filtre +
+        fosse.append(main.pop(main.index(cartes[-1])))
