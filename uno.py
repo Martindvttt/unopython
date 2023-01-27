@@ -1,5 +1,4 @@
 import random
-import secrets
 
 
 def create_deck():
@@ -34,14 +33,13 @@ hand_ai = []
 # ----Display---- #
 
 
-def display(index):
+def display(index, index_player, card, count):
+    player = {1: "Joueur", 2: "Michel"}
     input_str = {
-        1: "La carte piochée à été posée",
-        2: f"Carte posée : {tab_waste[-1]}",
-        3: "Vous piochez",
-        4: "L'IA pioche",
-        5: "Joueur gagne",
-        6: "IA gagne",
+        1: f"La carte {card} à été piochée",
+        2: f"{player[index_player]} pose un {card}",
+        3: f"{player[index_player]} pioche {count} cartes",
+        5: f"{player[index_player]} gagne",
     }
     output = 0
     print("|********************** UNO **********************|")
@@ -56,9 +54,9 @@ def display(index):
     print()
     print()
     print(f"{hand_player}".center(50))
-    if index < 7:
+    if index < 6:
         print(input_str[index].center(50))
-    elif index == 7:
+    elif index == 6:
         output = str(input('Carte a jouer :'))
     print()
     print()
@@ -70,9 +68,9 @@ def pick(hand, count):
     for i in range(0, count):
         hand.append(deck.pop())
     if hand == hand_ai:
-        display(4)
+        display(3, 2, any, count)
     elif hand == hand_player:
-        display(3)
+        display(3, 1, any, count)
 
 
 def waste(hand, card):
@@ -85,13 +83,21 @@ def waste(hand, card):
                 pick(hand_player, 2)
         if card[1] == "4":
             if hand == hand_player:
+                i = hand.index("+4")
+                hand[i] = hand[i] + card[2]
                 pick(hand_ai, 4)
             elif hand == hand_ai:
-                card.append(secrets.choice("R", "V", "B", "Y"))
+                i = hand.index("+4")
+                colors = ["R", "G", "B", "Y"]
+                hand[i] = hand[i] + random.choice(colors)
                 pick(hand_player, 4)
             tab_waste.append(hand.pop(hand.index(card)))
     else:
         tab_waste.append(hand.pop(hand.index(card)))
+        if hand == hand_player:
+            display(2, 1, card, any)
+        elif hand == hand_ai:
+            display(2, 2, card, any)
 
 
 def check_card(hand):
@@ -129,17 +135,13 @@ def tour_ai(hand):
     if cards:
         random.shuffle(cards)
         waste(hand, cards[-1])
-        display(2)
     else:
         pick(hand, 1)
-        if check_card(hand):
-            tab_waste.append(hand.pop())
-            display(1)
 
 
 def tour_player(hand):
     if check_card(hand):
-        card = display(7)
+        card = display(6, 1, any, any)
         waste(hand, card)
     else:
         pick(hand, 1)
@@ -152,13 +154,13 @@ def launch_game():
             tour_player(hand_player)
             lap = 1
         elif len(hand_player) < 1:
-            display(5)
+            display(5, 1, any, any)
             break
         elif len(hand_ai) >= 1 and lap == 1:
             tour_ai(hand_ai)
             lap = 0
         elif len(hand_ai) < 1:
-            display(6)
+            display(5, 2, any, any)
             break
 
 
