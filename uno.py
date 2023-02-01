@@ -1,10 +1,12 @@
 import random
 
 
+# to create our uno's deck we use this function to generate an integer, transform it in string and concatenate with a letter, which is the color
 def create_deck():
     deck = []
     j = 0
     for i in range(0, 10):
+        # we know that we could do better but we haven't found how to do it
         itoa = str(i)
         deck.append(itoa + "R")
         deck.append(itoa + "G")
@@ -44,12 +46,12 @@ def display(index, index_player, card, count):
     output = 0
     print("|********************** UNO **********************|")
     print()
-    print('Michel'.center(50))
+    print("Michel".center(50))
     print(f"{len(hand_ai)} cartes restantes".center(50))
     print()
     print()
     print()
-    print(f"Fosse : {tab_waste[-1]}".center(50))
+    print(f"Défausse : {tab_waste[-1]}".center(50))
     print()
     print()
     print()
@@ -57,13 +59,17 @@ def display(index, index_player, card, count):
     if index < 6:
         print(input_str[index].center(50))
     elif index == 6:
-        output = str(input('Carte a jouer :'))
+        output = str(input("Carte a jouer :"))
     print()
     print()
     print("|********************** *** **********************|")
     return output
 
 
+# ----End Display---- #
+
+
+# it's used to gives a card to a player when he can't play
 def pick(hand, count):
     for i in range(0, count):
         hand.append(deck.pop())
@@ -73,6 +79,7 @@ def pick(hand, count):
         display(3, 1, any, count)
 
 
+# this function handles the waste, it check if the player has chosen a +2 or +4 and dislay the last card played
 def waste(hand, card):
     if card[0] == "+":
         if card[1] == "2":
@@ -82,11 +89,12 @@ def waste(hand, card):
             elif hand == hand_ai:
                 pick(hand_player, 2)
         if card[1] == "4":
-            i = hand.index("+4")
             if hand == hand_player:
+                i = hand.index("+4")
                 hand[i] = hand[i] + card[2]
                 pick(hand_ai, 4)
             elif hand == hand_ai:
+                i = hand.index("+4")
                 colors = ["R", "G", "B", "Y"]
                 hand[i] = hand[i] + random.choice(colors)
                 card = hand[i]
@@ -100,6 +108,7 @@ def waste(hand, card):
             display(2, 2, card, any)
 
 
+# the function gives to players the card which he could play
 def check_card(hand):
     solutions = []
     to_compare = tab_waste[-1]
@@ -130,7 +139,8 @@ def check_card(hand):
     return solutions
 
 
-def tour_ai(hand):
+# this rules IA's turn, it takes playable cards and chooses which one it will play randomly
+def ai_turn(hand):
     cards = check_card(hand)
     if cards:
         random.shuffle(cards)
@@ -139,7 +149,7 @@ def tour_ai(hand):
         pick(hand, 1)
 
 
-def tour_player(hand):
+def player_turn(hand):
     if check_card(hand):
         card = display(6, 1, any, any)
         waste(hand, card)
@@ -147,23 +157,25 @@ def tour_player(hand):
         pick(hand, 1)
 
 
+# with this we choose who have to play and which end display we have to show on screen
 def launch_game():
     lap = 0
     while hand_player or hand_ai:
         if len(hand_player) >= 1 and lap == 0:
-            tour_player(hand_player)
+            player_turn(hand_player)
             lap = 1
         elif len(hand_player) < 1:
             display(5, 1, any, any)
             break
         elif len(hand_ai) >= 1 and lap == 1:
-            tour_ai(hand_ai)
+            ai_turn(hand_ai)
             lap = 0
         elif len(hand_ai) < 1:
             display(5, 2, any, any)
             break
 
 
+# this function rule the distribution of cards to the players
 def start():
     random.shuffle(deck)
     for i in range(0, 7):
