@@ -6,7 +6,7 @@ def create_deck():
     deck = []
     j = 0
     for i in range(0, 10):
-        # we know that we could do better but we haven't found how to do it
+    
         itoa = str(i)
         deck.append(itoa + "R")
         deck.append(itoa + "G")
