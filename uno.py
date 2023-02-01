@@ -82,14 +82,14 @@ def waste(hand, card):
             elif hand == hand_ai:
                 pick(hand_player, 2)
         if card[1] == "4":
+            i = hand.index("+4")
             if hand == hand_player:
-                i = hand.index("+4")
                 hand[i] = hand[i] + card[2]
                 pick(hand_ai, 4)
             elif hand == hand_ai:
-                i = hand.index("+4")
                 colors = ["R", "G", "B", "Y"]
                 hand[i] = hand[i] + random.choice(colors)
+                card = hand[i]
                 pick(hand_player, 4)
             tab_waste.append(hand.pop(hand.index(card)))
     else:
